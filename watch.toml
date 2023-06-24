@@ -1,0 +1,5 @@
+[[watch]]
+
+command = "bash build.sh"
+
+include = ["**/*.rs", "Cargo.toml"]
