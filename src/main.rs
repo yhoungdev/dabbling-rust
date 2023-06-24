@@ -11,9 +11,16 @@ enum AccessRoles {
     Customer,
 }
 
-fn get_enums() {
-    let admin = AccessRoles::Admin;
-    println!("{:?}", admin);
+enum RequestCode {
+    Success(u32),
+    ClientError(u32),
+    ServerError(u32),
+}
+
+fn get_enums(success_code: u32) {
+    let success = RequestCode::Success(success_code);
+
+    println!("this is the successcode {}", success_code)
 }
 
 fn get_username(first_name: String, second_name: String) -> String {
@@ -49,5 +56,5 @@ fn main() {
     println!("{}", callback);
 
     get_struct();
-    get_enums();
+    get_enums(200);
 }
