@@ -5,22 +5,22 @@ struct UserRole {
 
 struct TupleSturct(i32, i32, i32);
 
-#[derive(Debug)]
-enum AccessRoles {
-    Admin,
-    Customer,
-}
-
-enum RequestCode {
-    Success(u32),
-    ClientError(u32),
-    ServerError(u32),
+enum ApiResponseCode {
+    ResponseCode(u32),
 }
 
 fn get_enums(success_code: u32) {
-    let success = RequestCode::Success(success_code);
+    let response = ApiResponseCode::ResponseCode(success_code);
 
-    println!("this is the successcode {}", success_code)
+    match response {
+        ApiResponseCode::ResponseCode(code) if code >= 500 && code < 600 => {
+            let add: u32 = code * 50;
+            print!("{}", add)
+        }
+        ApiResponseCode::ResponseCode(200) => print!(" Success"),
+        ApiResponseCode::ResponseCode(400) => print!("Client Error"),
+        _ => println!("Unknown response code: {:.2}", success_code),
+    }
 }
 
 fn get_username(first_name: String, second_name: String) -> String {
@@ -32,29 +32,15 @@ fn get_username(first_name: String, second_name: String) -> String {
     new_string
 }
 
-fn get_struct() {
-    let customer = UserRole {
-        admin: "whoami".to_string(),
-        buyer: "emmanuel".to_string(),
-    };
-
-    let get_customer = customer.admin + " " + &customer.buyer;
-    print!("user is {}", get_customer);
-
-    let tuple1: TupleSturct = TupleSturct(1, 2, 3);
-
-    let assign_one = tuple1.0;
-    if assign_one == 1 {
-        println!("this is the index of {}", assign_one);
-    } else {
-        println!("sorry no match for this");
-    }
+fn get_arrays() {
+    let arr: (&str, &str) = ("hello", "second");
+    print!("{} {}", arr.1, arr.0);
 }
 
 fn main() {
     let callback = get_username("obiabo".to_string(), "emmanuel".to_string());
     println!("{}", callback);
 
-    get_struct();
-    get_enums(200);
+    get_enums(500);
+    get_arrays()
 }
